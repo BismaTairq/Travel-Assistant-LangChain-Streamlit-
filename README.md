@@ -1,7 +1,9 @@
 # Travel Assistant (LangChain + Streamlit)
 
 Welcome to the **AI-Powered Travel Assistant** — your intelligent companion for planning smarter, faster, and visa-compliant journeys.
+
 **Chat naturally.** Ask about flights, travel rules, or visa policies.
+
 **Powered by:** LangChain · OpenAI · FAISS · Streamlit
 ---
 ## Features at a Glance
@@ -56,19 +58,38 @@ streamlit run app.py
 
 ---
 
+### Prompt Strategies & Agent Logic
+
+## Prompt Strategy
+
+* Flight queries are passed through an LLM prompt chain to extract structured search criteria like origin, destination, dates, alliance, refundable, layovers, and max price.
+
+* Policy queries are passed directly to the RetrievalQA chain powered by FAISS + HuggingFace embeddings on visa_rules.md.
+
+Tool-Based Agent Logic
+
+* The system uses a LangChain conversational-react-description agent.
+
+* Agent receives natural language input and routes it to the appropriate tool:
+
+    * FlightSearch: Parses and filters flights from flights.json.
+
+    * PolicyQA: Runs vector search + LLM completion over embedded policy text.
+
+* ConversationBufferMemory is used to maintain context in chat.
+
+
 ## Sample Chat Prompts
 
-### Flights:
-
 * "Show me all round trips to Tokyo with Star Alliance in August."
+  <img width="726" height="422" alt="image" src="https://github.com/user-attachments/assets/107fb7a2-ada5-46c6-91de-7b1a2417080c" />
+
 * "Find me a flight from Dubai to Tokyo with Turkish Airlines."
-* "Are there any refundable flights from Lahore to Berlin in September?"
+  <img width="690" height="513" alt="image" src="https://github.com/user-attachments/assets/636deaa4-9e94-41a3-9c8b-65dada41be33" />
 
-### Visa & Refund:
+* "Are there any refundable flights from Los Angeles to Tokyo in September?"
+  <img width="704" height="428" alt="image" src="https://github.com/user-attachments/assets/5b1b5646-d71e-4664-bee1-cca887cc679a" />
 
-* "Do I need a visa for Spain as a Pakistani citizen?"
-* "Can UAE citizens visit Japan without a visa?"
-* "How long does it take to process a flight refund?"
 ---
 
 ## Requirements
